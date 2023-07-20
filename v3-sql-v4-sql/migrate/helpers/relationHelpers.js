@@ -84,7 +84,7 @@ function oneToOneRelationMapper(relation, item) {
 
   if (id && idF) {
     const keyF = relation.entityName === relation.modelF
-      ? `inv_${makeRelationModelId(relation.modelF)}`
+      ? `${makeRelationModelId(relation.modelF)}`
       : makeRelationModelId(relation.modelF);
     return {
       [makeRelationModelId(relation.entityName, { isComponent: relation.isComponent })]: id,
@@ -117,6 +117,10 @@ async function migrateOneToOneRelation(relation) {
 }
 
 async function migrateManyToManyRelation(relation, sourceTable) {
+  if(relation.table === 'components_cards_tariffs_tabs_jazz_tariffs_links') {
+    debugger;
+  }
+
   if (pluralize(relation.model, 1) === relation.modelF) {
     await migrate(sourceTable, relation.table, ({ id, ...item }) => ({
       [makeRelationModelId(relation.model)]: item[`${relation.modelF}_id`],

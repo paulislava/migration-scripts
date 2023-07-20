@@ -1,10 +1,8 @@
 const { snakeCase } = require('lodash/fp');
+const pluralize = require('pluralize');
 
 function fixColumnNameInLocalizationsTable(fieldName) {
-  if (fieldName.includes('-') && !fieldName.includes('related_')) {
-    return 'inv_' + snakeCase(fieldName);
-  }
-  return snakeCase(fieldName).replace(/^related_(.*)?$/, 'inv_$1');
+  return pluralize(snakeCase(fieldName).replace(/^related_(.*)?$/, '$1'), 1);
 }
 
 function migrateField(fieldName) {
